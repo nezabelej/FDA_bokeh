@@ -1,6 +1,7 @@
 from bokeh.models.glyphs import HBar
 from bokeh.models import ColumnDataSource, DataRange1d, Plot, LinearAxis, Grid, HoverTool
 from bokeh.plotting import figure, show
+from bokeh.properties import String
 import pandas as pd
 from bokeh.charts.attributes import CatAttr
 from bokeh.charts import Bar, output_file, show
@@ -37,7 +38,7 @@ def hbar(x,y, yText):
 def figurePlot(x, y, yText):
 
     plot = figure(width=300, height=300)
-    plot.hbar(right=x, y=y, left=0, color="#7FC97F")
+    plot.hbar(right=x, y=yText, left=0, color="#7FC97F")
 
     show(plot)
 

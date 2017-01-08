@@ -5,7 +5,8 @@ from bokeh.models import Button
 from bokeh.palettes import RdYlBu3
 from bokeh.plotting import figure, curdoc
 
-from fda import frequentAdverseReactions
+from fda import *
+from plotters import *
 
 # create a plot and style its properties
 p = figure(x_range=(0, 100), y_range=(0, 100), toolbar_location=None)
@@ -23,14 +24,16 @@ ds = r.data_source
 
 from bokeh.sampledata.autompg import autompg as df
 
-from plotters import *
-far = frequentAdverseReactions()
+far = typesOfReportedProducts('reactions:alopecia')
+far = typesOfReportedProducts()
+
 print (array(far['x']))
 print (array(far['y']))
 print (far)
+
 #bar, source = vBar(far['x'], far['y'])
-bar, source = hbar(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
-plot = figurePlot(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
+#bar, source = hbar(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
+#plot = figurePlot(array(far['y']), array(range(1, len(far['x']))), far['x'])
 #plot = figurePlot(far['x'], far['y'])
 
 
