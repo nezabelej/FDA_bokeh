@@ -24,11 +24,11 @@ from bokeh.sampledata.autompg import autompg as df
 
 from plotters import *
 far = frequentAdverseReactions()
-print far['x']
-print far['y']
-print far
+print (far['x'])
+print (far['y'])
+print (far)
 #bar, source = vBar(far['x'], far['y'])
-bar, source = vBar([], 0)
+bar, source = HBar([], 0)
 
 
 

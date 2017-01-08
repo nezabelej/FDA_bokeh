@@ -1,12 +1,12 @@
-import httplib, urllib, ssl
+import http.client, urllib, ssl
 import json
 import pandas as pd
 
 ssl._create_default_https_context = ssl._create_unverified_context
-conn = httplib.HTTPSConnection("api.fda.gov")
+conn = http.client.HTTPSConnection("api.fda.gov")
 
 #drug/event.json
-params = urllib.urlencode({
+params = urllib.parse.urlencode({
     'api_key': 'VLyIUAm6qwh0WMxMucGuLKSNl3YNNtvsyj78MjrX',
     'search': 'receivedate:[20040101+TO+20081231]',
     'limit': 1
@@ -19,7 +19,7 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107'):
     conn.request("GET", "/drug/event.json?search=" + dateQuery + '&count=patient.reaction.reactionmeddrapt.exact')
     r1 = conn.getresponse()
 
-    response = json.loads(r1.read())
+    response = json.loads(r1.read().decode('utf-8'))
 
     conn.close()
 

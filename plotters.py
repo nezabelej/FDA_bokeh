@@ -2,12 +2,12 @@ from bokeh.models.glyphs import HBar
 from bokeh.models import ColumnDataSource, DataRange1d, Plot, LinearAxis, Grid
 import numpy as np
 
-def vBar(x, y):
+def HBar(x, y):
     N = 9
     y = np.linspace(-2, 2, N)
-    x = y ** 2
-    print x
-    print y
+    x = y ** 3
+    print (x)
+    print (y)
     source = ColumnDataSource(dict(y=y, right=x,))
 
     xdr = DataRange1d()
