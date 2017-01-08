@@ -1,40 +1,11 @@
 from bokeh.models.glyphs import HBar
 from bokeh.models import ColumnDataSource, DataRange1d, Plot, LinearAxis, Grid, HoverTool
 from bokeh.plotting import figure, show
-from bokeh.properties import String
 import pandas as pd
 from bokeh.charts.attributes import CatAttr
 from bokeh.charts import Bar, output_file, show
-from bokeh.models import Range1d
+from bokeh.models import Axis
 
-def hbar(x,y, yText):
-    N = 9
-    #y = np.linspace(-2, 2, N)
-    #x = y ** 3
-    print (x)
-    print (y)
-    source = ColumnDataSource(dict(y=yText, right=x,))
-
-    xdr = DataRange1d()
-    ydr = DataRange1d()
-
-    plot = Plot(
-        title=None, x_range=xdr, y_range=ydr, plot_width=300, plot_height=300,
-        h_symmetry=False, v_symmetry=False, min_border=0, toolbar_location=None)
-
-    glyph = HBar(y="y", right="right", left=0, height=0.5, fill_color="#b3de69")
-    plot.add_glyph(source, glyph)
-
-    xaxis = LinearAxis()
-    plot.add_layout(xaxis, 'below')
-
-    yaxis = LinearAxis()
-    plot.add_layout(yaxis, 'left')
-
-    plot.add_layout(Grid(dimension=0, ticker=xaxis.ticker))
-    plot.add_layout(Grid(dimension=1, ticker=yaxis.ticker))
-
-    return plot, source
 
 def figurePlot(x, y, yText):
 
@@ -59,11 +30,12 @@ def barChart(x,y):
 
 
 
-def example(data):
+def plotHBar(data):
 
     keys = data['x']
     p = figure(width=800, height=400, y_range=keys)
-
+    yaxis = p.select(dict(type=Axis, layout="below"))[0]
+    yaxis.formatter.use_scientific = False
     hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'])
 
     return p, hbar.data_source

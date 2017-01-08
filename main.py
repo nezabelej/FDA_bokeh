@@ -35,8 +35,7 @@ far = frequentAdverseReactions()
 # put the button and plot in a layout and add to the document
 #curdoc().add_root(column(button, p))
 
-ex, dataSoruce = example(far)
-
+ex, dataSoruce = plotHBar(far)
 # create a callback that will add a number in a random location
 def callback():
     data = frequentAdverseReactions(fromDate='20160101', toDate='20170101')
