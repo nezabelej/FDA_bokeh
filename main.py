@@ -7,7 +7,7 @@ from bokeh.plotting import figure, curdoc
 
 from fda import frequentAdverseReactions
 from plotters import *
-
+from pprint import pprint
 # create a plot and style its properties
 p = figure(x_range=(0, 100), y_range=(0, 100), toolbar_location=None)
 p.border_fill_color = 'black'
@@ -35,17 +35,13 @@ far = frequentAdverseReactions()
 # put the button and plot in a layout and add to the document
 #curdoc().add_root(column(button, p))
 
-ex, dataSoruce = plotHBar(far)
+ex, dataSource = plotHBar(far)
+
 # create a callback that will add a number in a random location
 def callback():
+
     data = frequentAdverseReactions(fromDate='20160101', toDate='20170101')
-    # BEST PRACTICE --- update .data in one step with a new dict
-    dataSoruce = dict()
-    new_data['x'] = ds.data['x'] + [random()*70 + 15]
-    new_data['y'] = ds.data['y'] + [random()*70 + 15]
-    new_data['text_color'] = ds.data['text_color'] + [RdYlBu3[i%3]]
-    new_data['text'] = ds.data['text'] + [str(i)]
-    ds.data = new_data
+    dataSource.data['right'] = data['y']
 
 # add a button widget and configure with the call back
 button = Button(label="Press Me")
