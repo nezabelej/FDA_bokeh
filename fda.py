@@ -27,7 +27,24 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107'):
     return countToBarData(response["results"], "Adverse reactions", "term", "count")
 
 
+#https://api.fda.gov/food/event.json?count=products.industry_name.exact
+#https://api.fda.gov/food/event.json?search=outcomes:"serious+injuries"&count=products.industry_name.exact
+    #search = outcomes:"serious+injuries"
+#https://api.fda.gov/food/event.json?search=reactions:alopecia&count=products.industry_name.exact
+    #search = reactions:alopecia
+def typesOfReportedProducts(search=''):
+    query='?'
+    if search:
+        query='?search='+search+'&'
 
+    print("/drug/event.json" + query + '?count=products.industry_name.exact')
+    conn.request("GET", "/food/event.json" + query + 'count=products.industry_name.exact')
+
+    r1 = conn.getresponse()
+    response = json.loads(r1.read().decode('utf-8'))
+
+    conn.close()
+    return countToBarData(response["results"], "term", "count")
 
 def countToBarData(countResults, dataName, xName, yName):
     transformed = {}
