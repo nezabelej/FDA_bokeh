@@ -2,7 +2,7 @@ from bokeh.models.glyphs import HBar
 from bokeh.models import ColumnDataSource, DataRange1d, Plot, LinearAxis, Grid
 import numpy as np
 
-def HBar(x, y):
+def hbar(x, y):
     N = 9
     y = np.linspace(-2, 2, N)
     x = y ** 3

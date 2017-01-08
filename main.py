@@ -28,7 +28,7 @@ print (far['x'])
 print (far['y'])
 print (far)
 #bar, source = vBar(far['x'], far['y'])
-bar, source = HBar([], 0)
+bar, source = hbar([], 0)
 
 
 
