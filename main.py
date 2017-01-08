@@ -4,6 +4,7 @@ from bokeh.layouts import column
 from bokeh.models import Button
 from bokeh.palettes import RdYlBu3
 from bokeh.plotting import figure, curdoc
+import dateutil.parser
 
 from fda import *
 from plotters import *
@@ -30,13 +31,21 @@ far = frequentAdverseReactions()
 #plot = figurePlot(far['x'], far['y'])
 dates = dateOfCreatedReport()
 print(dates['x'])
-plot = figureSingleLine(dates['x'], dates['y'])
+print(dateutil.parser.parse(dates['x'][1]))
+formattedDates = list(map(lambda x: dateutil.parser.parse(x), dates['x']))
+print(formattedDates)
+plot = figureSingleLine(formattedDates, dates['y'])
+
+# put the button and plot in a layout and add to the document
+#curdoc().add_root(column(button, p))
+
+ex, dataSoruce = example(far)
 
 # create a callback that will add a number in a random location
 def callback():
-    data = frequentAdverseReactions()
+    data = frequentAdverseReactions(fromDate='20160101', toDate='20170101')
     # BEST PRACTICE --- update .data in one step with a new dict
-    new_data = dict()
+    dataSoruce = dict()
     new_data['x'] = ds.data['x'] + [random()*70 + 15]
     new_data['y'] = ds.data['y'] + [random()*70 + 15]
     new_data['text_color'] = ds.data['text_color'] + [RdYlBu3[i%3]]
@@ -47,11 +56,11 @@ def callback():
 button = Button(label="Press Me")
 button.on_click(callback)
 
+
 # put the button and plot in a layout and add to the document
 #curdoc().add_root(column(button, p))
 
-ex = example(far, "Adverse reactions")
-
+ex = example(far)
 curdoc().add_root(column(button, plot))
 
 args = curdoc().session_context.request.arguments

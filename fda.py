@@ -16,7 +16,7 @@ params = urllib.parse.urlencode({
 def frequentAdverseReactions(fromDate='20040101', toDate='20170107'):
     dateQuery = "receivedate:[%s+TO+%s]" % (fromDate, toDate)
 
-    conn.request("GET", "/drug/event.json?search=" + dateQuery + '&count=patient.reaction.reactionmeddrapt.exact')
+    conn.request("GET", "/drug/event.json?search=" + dateQuery + '&count=patient.reaction.reactionmeddrapt.exact&limit=10')
     r1 = conn.getresponse()
 
     response = json.loads(r1.read().decode('utf-8'))
@@ -24,7 +24,7 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107'):
     conn.close()
 
 
-    return countToBarData(response["results"], "Adverse reactions", "term", "count")
+    return countToBarData(response["results"], "term", "count")
 
 
 #https://api.fda.gov/food/event.json?count=products.industry_name.exact
@@ -44,9 +44,11 @@ def typesOfReportedProducts(search=''):
     response = json.loads(r1.read().decode('utf-8'))
 
     conn.close()
-    return countToBarData(response["results"], "Products", "term", "count")
+    return countToBarData(response["results"], "term", "count")
 
 
+#https://open.fda.gov/food/event/
+#https://api.fda.gov/food/event.json?count=date_created
 def dateOfCreatedReport():
     conn.request("GET", "/food/event.json?count=date_created")
 
@@ -54,16 +56,12 @@ def dateOfCreatedReport():
     response = json.loads(r1.read().decode('utf-8'))
 
     conn.close()
-    return countToBarData(response["results"], "Created reports", "time", "count")
+    return countToBarData(response["results"], "time", "count")
 
 
-def countToBarData(countResults, dataName, xName, yName):
-    transformed = {}
-    i = 0
-    for result in countResults:
-        transformed[result[xName]] = result[yName]
-        i += 1
-        if i == 20:
-            break
 
-    return pd.DataFrame({dataName: transformed})
+def countToBarData(countResults, xName, yName):
+    x = list(map(lambda result: result[xName], countResults))
+    y = list(map(lambda result: result[yName], countResults))
+
+    return {'x': x, 'y': y}
