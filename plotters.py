@@ -1,11 +1,14 @@
 from bokeh.models.glyphs import HBar
-from bokeh.models import ColumnDataSource, DataRange1d, Plot, LinearAxis, Grid
-import numpy as np
+from bokeh.models import ColumnDataSource, DataRange1d, Plot, LinearAxis, Grid, HoverTool
+from bokeh.plotting import figure, show
+import pandas as pd
+from bokeh.charts.attributes import CatAttr
+from bokeh.charts import Bar, output_file, show
 
-def hbar(x, y):
+def hbar(x,y):
     N = 9
-    y = np.linspace(-2, 2, N)
-    x = y ** 3
+    #y = np.linspace(-2, 2, N)
+    #x = y ** 3
     print (x)
     print (y)
     source = ColumnDataSource(dict(y=y, right=x,))
@@ -30,3 +33,23 @@ def hbar(x, y):
     plot.add_layout(Grid(dimension=1, ticker=yaxis.ticker))
 
     return plot, source
+
+def figurePlot(x, y):
+    plot = figure(width=300, height=300)
+    plot.hbar(right=x, y=y, left=0, color="#7FC97F")
+
+    show(plot)
+
+    return plot
+
+def barChart(x,y):
+
+
+    d = {'kraji': x, 'count': y}
+    print(d)
+
+    df = pd.DataFrame(d)
+
+    p = Bar(df, label=CatAttr(columns=['kraji'], sort=False), values='count',
+            color='blue', legend=False, title='Produkcija',
+            xlabel='Mesta z največjo produkcijo', ylabel='Število proizvodov')

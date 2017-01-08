@@ -1,4 +1,5 @@
 from random import random
+from numpy import array
 from bokeh.layouts import column
 from bokeh.models import Button
 from bokeh.palettes import RdYlBu3
@@ -24,12 +25,13 @@ from bokeh.sampledata.autompg import autompg as df
 
 from plotters import *
 far = frequentAdverseReactions()
-print (far['x'])
-print (far['y'])
+print (array(far['x']))
+print (array(far['y']))
 print (far)
 #bar, source = vBar(far['x'], far['y'])
-bar, source = hbar([], 0)
-
+bar, source = hbar(array(far['y']), array(range(1, len(far['x']))))
+#plot = figurePlot(far['x'], far['y'])
+#plot = figurePlot(far['x'], far['y'])
 
 
 # create a callback that will add a number in a random location
