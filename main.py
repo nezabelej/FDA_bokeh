@@ -29,8 +29,8 @@ print (array(far['x']))
 print (array(far['y']))
 print (far)
 #bar, source = vBar(far['x'], far['y'])
-bar, source = hbar(array(far['y']), array(range(1, len(far['x']))))
-#plot = figurePlot(far['x'], far['y'])
+bar, source = hbar(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
+plot = figurePlot(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
 #plot = figurePlot(far['x'], far['y'])
 
 
@@ -51,7 +51,7 @@ button.on_click(callback)
 
 # put the button and plot in a layout and add to the document
 #curdoc().add_root(column(button, p))
-curdoc().add_root(column(button, bar))
+curdoc().add_root(column(button, plot))
 
 
 args = curdoc().session_context.request.arguments

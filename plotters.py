@@ -5,13 +5,13 @@ import pandas as pd
 from bokeh.charts.attributes import CatAttr
 from bokeh.charts import Bar, output_file, show
 
-def hbar(x,y):
+def hbar(x,y, yText):
     N = 9
     #y = np.linspace(-2, 2, N)
     #x = y ** 3
     print (x)
     print (y)
-    source = ColumnDataSource(dict(y=y, right=x,))
+    source = ColumnDataSource(dict(y=yText, right=x,))
 
     xdr = DataRange1d()
     ydr = DataRange1d()
@@ -34,7 +34,12 @@ def hbar(x,y):
 
     return plot, source
 
-def figurePlot(x, y):
+def figurePlot(x, y, yText):
+
+    source = ColumnDataSource(dict(y=yText, right=x ))
+
+    xdr = DataRange1d()
+    ydr = DataRange1d()
     plot = figure(width=300, height=300)
     plot.hbar(right=x, y=y, left=0, color="#7FC97F")
 
