@@ -24,14 +24,18 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107'):
     conn.close()
 
 
-    return countToBarData(response["results"], "term", "count")
+    return countToBarData(response["results"], "Adverse reactions", "term", "count")
 
 
 
 
-def countToBarData(countResults, xName, yName):
-    x = list(map(lambda result: result[xName], countResults))
-    y = list(map(lambda result: result[yName], countResults))
+def countToBarData(countResults, dataName, xName, yName):
+    transformed = {}
+    i = 0
+    for result in countResults:
+        transformed[result[xName]] = result[yName]
+        i += 1
+        if i == 20:
+            break
 
-    return {'x': x, 'y': y}
-    #return pd.DataFrame({xName: x, yName: y})
+    return pd.DataFrame({dataName: transformed})

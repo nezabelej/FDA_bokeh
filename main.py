@@ -6,6 +6,7 @@ from bokeh.palettes import RdYlBu3
 from bokeh.plotting import figure, curdoc
 
 from fda import frequentAdverseReactions
+from plotters import *
 
 # create a plot and style its properties
 p = figure(x_range=(0, 100), y_range=(0, 100), toolbar_location=None)
@@ -23,14 +24,11 @@ ds = r.data_source
 
 from bokeh.sampledata.autompg import autompg as df
 
-from plotters import *
 far = frequentAdverseReactions()
-print (array(far['x']))
-print (array(far['y']))
-print (far)
+
 #bar, source = vBar(far['x'], far['y'])
-bar, source = hbar(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
-plot = figurePlot(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
+#bar, source = hbar(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
+#plot = figurePlot(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
 #plot = figurePlot(far['x'], far['y'])
 
 
@@ -51,7 +49,10 @@ button.on_click(callback)
 
 # put the button and plot in a layout and add to the document
 #curdoc().add_root(column(button, p))
-curdoc().add_root(column(button, plot))
+
+ex = example(far, "Adverse reactions")
+
+curdoc().add_root(column(button, ex))
 
 
 args = curdoc().session_context.request.arguments
