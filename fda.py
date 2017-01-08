@@ -44,7 +44,18 @@ def typesOfReportedProducts(search=''):
     response = json.loads(r1.read().decode('utf-8'))
 
     conn.close()
-    return countToBarData(response["results"], "term", "count")
+    return countToBarData(response["results"], "Products", "term", "count")
+
+
+def dateOfCreatedReport():
+    conn.request("GET", "/food/event.json?count=date_created")
+
+    r1 = conn.getresponse()
+    response = json.loads(r1.read().decode('utf-8'))
+
+    conn.close()
+    return countToBarData(response["results"], "Created reports", "time", "count")
+
 
 def countToBarData(countResults, dataName, xName, yName):
     transformed = {}

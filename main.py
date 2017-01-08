@@ -5,7 +5,7 @@ from bokeh.models import Button
 from bokeh.palettes import RdYlBu3
 from bokeh.plotting import figure, curdoc
 
-from fda import frequentAdverseReactions
+from fda import *
 from plotters import *
 
 # create a plot and style its properties
@@ -21,16 +21,16 @@ r = p.text(x=[], y=[], text=[], text_color=[], text_font_size="20pt",
 
 ds = r.data_source
 
-
-from bokeh.sampledata.autompg import autompg as df
-
+#queries
 far = frequentAdverseReactions()
 
 #bar, source = vBar(far['x'], far['y'])
 #bar, source = hbar(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
 #plot = figurePlot(array(far['y']), array(range(1, len(far['x']))), array(far['y']))
 #plot = figurePlot(far['x'], far['y'])
-
+dates = dateOfCreatedReport()
+print(dates['x'])
+plot = figureSingleLine(dates['x'], dates['y'])
 
 # create a callback that will add a number in a random location
 def callback():
@@ -52,8 +52,7 @@ button.on_click(callback)
 
 ex = example(far, "Adverse reactions")
 
-curdoc().add_root(column(button, ex))
-
+curdoc().add_root(column(button, plot))
 
 args = curdoc().session_context.request.arguments
 

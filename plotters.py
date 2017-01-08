@@ -36,27 +36,18 @@ def hbar(x,y, yText):
 
     return plot, source
 
-def figurePlot(x, y, yText):
-
+def figurePlot(x, y):
     plot = figure(width=300, height=300)
-    plot.hbar(right=x, y=yText, left=0, color="#7FC97F")
-
-    show(plot)
+    plot.hbar(right=x, y=y, left=0, color="#7FC97F")
 
     return plot
 
-def barChart(x,y):
+def figureSingleLine(x,y):
+    p = figure(plot_width=400, plot_height=400, x_axis_type="datetime")
 
+    p.line(x, y, line_width=2)
 
-    d = {'kraji': x, 'count': y}
-    print(d)
-
-    df = pd.DataFrame(d)
-
-    p = Bar(df, label=CatAttr(columns=['kraji'], sort=False), values='count',
-            color='blue', legend=False, title='Produkcija',
-            xlabel='Mesta z največjo produkcijo', ylabel='Število proizvodov')
-
+    return p
 
 
 def example(dataFrame, seriesName):
