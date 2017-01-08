@@ -36,10 +36,6 @@ def hbar(x,y, yText):
 
 def figurePlot(x, y, yText):
 
-    source = ColumnDataSource(dict(y=yText, right=x ))
-
-    xdr = DataRange1d()
-    ydr = DataRange1d()
     plot = figure(width=300, height=300)
     plot.hbar(right=x, y=y, left=0, color="#7FC97F")
 
