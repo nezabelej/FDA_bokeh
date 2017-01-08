@@ -32,11 +32,16 @@ far = frequentAdverseReactions()
 #plot = figurePlot(far['x'], far['y'])
 
 
+# put the button and plot in a layout and add to the document
+#curdoc().add_root(column(button, p))
+
+ex, dataSoruce = example(far)
+
 # create a callback that will add a number in a random location
 def callback():
-    data = frequentAdverseReactions()
+    data = frequentAdverseReactions(fromDate='20160101', toDate='20170101')
     # BEST PRACTICE --- update .data in one step with a new dict
-    new_data = dict()
+    dataSoruce = dict()
     new_data['x'] = ds.data['x'] + [random()*70 + 15]
     new_data['y'] = ds.data['y'] + [random()*70 + 15]
     new_data['text_color'] = ds.data['text_color'] + [RdYlBu3[i%3]]
@@ -46,11 +51,6 @@ def callback():
 # add a button widget and configure with the call back
 button = Button(label="Press Me")
 button.on_click(callback)
-
-# put the button and plot in a layout and add to the document
-#curdoc().add_root(column(button, p))
-
-ex = example(far, "Adverse reactions")
 
 curdoc().add_root(column(button, ex))
 

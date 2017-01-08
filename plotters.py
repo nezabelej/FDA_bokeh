@@ -59,33 +59,11 @@ def barChart(x,y):
 
 
 
-def example(dataFrame, seriesName):
-    this_series = dataFrame.loc[:, seriesName]
-    p = figure(width=800, height=400, y_range=this_series.index.tolist())
+def example(data):
 
-    p.background_fill = "#EAEAF2"
+    keys = data['x']
+    p = figure(width=800, height=400, y_range=keys)
 
-    p.grid.grid_line_alpha = 1.0
-    p.grid.grid_line_color = "white"
+    hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'])
 
-    p.xaxis.axis_label = 'Number of reactions'
-    p.xaxis.axis_label_text_font_size = '4pt'
-    p.xaxis.major_label_text_font_size = '4pt'
-
-
-    p.yaxis.major_label_text_font_size = '2pt'
-    p.yaxis.axis_label = 'Reaction'
-
-    p.yaxis.axis_label_text_font_size = '2pt'
-
-    maxVal = max(this_series.iteritems())[1]
-
-    j = 1
-    for k, v in this_series.iteritems():
-        print(v/float(2 * maxVal))
-        print(abs(v) / float(maxVal))
-        p.rect(x=v/float(2 * maxVal), y=j, width=abs(v)/float(maxVal) , height=0.04, color=(76, 114, 176),
-               width_units="data", height_units="data")
-        j += 1
-
-    return p
+    return p, hbar.data_source
