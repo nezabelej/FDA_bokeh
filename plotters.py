@@ -12,7 +12,7 @@ def figureSingleLine(x,y):
 def plotHBar(data):
 
     keys = data['x']
-    p = figure(width=800, height=400, y_range=keys)
+    p = figure(width=500, height=350, y_range=keys)
     yaxis = p.select(dict(type=Axis, layout="below"))[0]
     yaxis.formatter.use_scientific = False
     hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'])

@@ -35,10 +35,13 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107'):
 def typesOfReportedProducts(search=''):
     query='?'
     if search:
+        if (search == 'serious'):
+            search = 'outcomes:"serious+injuries"'
+        elif (search == 'hairLoss'):
+            search = 'reactions:alopecia'
         query='?search='+search+'&'
 
-    print("/drug/event.json" + query + '?count=products.industry_name.exact')
-    conn.request("GET", "/food/event.json" + query + 'count=products.industry_name.exact')
+    conn.request("GET", "/food/event.json" + query + 'count=products.industry_name.exact&limit=10')
 
     r1 = conn.getresponse()
     response = json.loads(r1.read().decode('utf-8'))
