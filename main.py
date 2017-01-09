@@ -5,6 +5,14 @@ from bokeh.layouts import layout, widgetbox
 from fda import *
 from plotters import *
 
+
+def draw(controls, plot):
+    sizing_mode = 'fixed'
+    inputs = widgetbox(*controls, sizing_mode=sizing_mode)
+    l = layout(
+        [[inputs, plot]], sizing_mode=sizing_mode)
+    curdoc().add_root(l)
+
 ##########################################################################
 products = typesOfReportedProducts()
 plotProducts, dataProducts = plotHBar(products, 'What types of products are reported?')
@@ -24,12 +32,7 @@ selector = Select(title='Filters:', height=50, width=100, value='All adverse eve
                            'Resulting in hair loss'])
 selector.on_change('value', lambda attr, old, new: productsChange())
 
-sizing_mode = 'fixed'  # 'scale_width' also looks nice with this example
-controls = [selector]
-inputs = widgetbox(*controls, sizing_mode=sizing_mode)
-l = layout(
-    [[inputs, plotProducts]], sizing_mode=sizing_mode)
-curdoc().add_root(l)
+draw([selector], plotProducts)
 ###########################################################################
 
 far = frequentAdverseReactions()
@@ -42,7 +45,6 @@ def callback():
 
 button = Button(label="Press Me")
 button.on_click(callback)
-
 
 dateSlider = Slider(width=200, start=2004, end=2017, step=1)
 ###########################################################################
