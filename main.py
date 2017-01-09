@@ -6,11 +6,11 @@ from fda import *
 from plotters import *
 
 
-def draw(controls, plot):
+def draw(controls, desc, plot):
     sizing_mode = 'fixed'
     inputs = widgetbox(*controls, sizing_mode=sizing_mode)
     l = layout(
-        [[inputs, plot]], sizing_mode=sizing_mode)
+        [[desc], [inputs, plot]], sizing_mode=sizing_mode)
     curdoc().add_root(l)
 
 ##########################################################################
@@ -32,9 +32,12 @@ selector = Select(title='Filters:', value='All adverse event reports',
                            'Resulting in hair loss'])
 selector.on_change('value', lambda attr, old, new: productsChange())
 
-draw([selector], plotProducts)
-###########################################################################
+desc = Div(text="Certain product types have more adverse events associated with them than others. "
+                "For example, nutritional and dietary supplements have more adverse event reports, "
+                "partly because manufacturers and distributors are required to report them.", width=800)
 
+draw([selector], desc, plotProducts)
+###########################################################################
 far = frequentAdverseReactions()
 plotReactions, dataReactions = plotHBar(far, "What adverse drug reactions are frequently reported?")
 
@@ -54,15 +57,22 @@ dateSlider2 = Slider(width=200, start=2005, end=2017, step=1, value=2017)
 dateSlider1.on_change('value', lambda attr, old, new: onChangeReactions())
 dateSlider2.on_change('value', lambda attr, old, new: onChangeReactions())
 
-draw([selectorGender, dateSlider1, dateSlider2], plotReactions)
+desc = Div(text="Adverse reactions range from product quality issues to very serious outcomes, "
+                "including death. Use the buttons next to the chart to see how reported reactions "
+                "vary with different search criteria.", width=800)
+
+draw([selectorGender, dateSlider1, dateSlider2], desc, plotReactions)
 ###########################################################################
-
-
 dates = dateOfCreatedReport()
 formattedDates = list(map(lambda x: dateutil.parser.parse(x), dates['x']))
 plotDates, dataDates = figureSingleLine(formattedDates, dates['y'], "Adverse food, dietary supplement, and cosmetic event reports since 2004")
 
-draw([], plotDates)
+desc = Div(text="This is the openFDA API endpoint for adverse food, dietary supplement, "
+                "and cosmetic product events. An adverse event is submitted to the FDA to "
+                "report adverse health effects and product complaints about food, "
+                "dietary supplements, and cosmetics.", width=800)
+
+draw([], desc, plotDates)
 ###########################################################################
 curdoc().title = "FDA analysis"
 args = curdoc().session_context.request.arguments
