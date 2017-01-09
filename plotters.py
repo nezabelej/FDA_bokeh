@@ -2,8 +2,8 @@ from bokeh.plotting import figure
 from bokeh.models import Axis
 
 
-def figureSingleLine(x,y):
-    p = figure(plot_width=400, plot_height=400, x_axis_type='datetime')
+def figureSingleLine(x,y, title):
+    p = figure(title=title, plot_width=400, plot_height=400, x_axis_type='datetime')
     line = p.line(x, y, line_width=2, color="#7FC97F")
 
     return p, line.data_source

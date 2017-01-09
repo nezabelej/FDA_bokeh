@@ -36,24 +36,27 @@ draw([selector], plotProducts)
 ###########################################################################
 
 far = frequentAdverseReactions()
-ex, ds2 = plotHBar(far, "What adverse reactions are frequently reported?")
+plotReactions, dataReactions = plotHBar(far, "What adverse reactions are frequently reported?")
 
 def callback():
     data = frequentAdverseReactions(fromDate='20160101', toDate='20170101')
-    ex.y_range.factors = data['x']
-    ds2.data['right'] = data['y']
+    plotReactions.y_range.factors = data['x']
+    dataReactions.data['right'] = data['y']
 
 button = Button(label="Press Me")
 button.on_click(callback)
 
 dateSlider = Slider(width=200, start=2004, end=2017, step=1)
+
+draw([button, dateSlider], plotReactions)
 ###########################################################################
 
 
 dates = dateOfCreatedReport()
 formattedDates = list(map(lambda x: dateutil.parser.parse(x), dates['x']))
-plot, ds1 = figureSingleLine(formattedDates, dates['y'])
+plotDates, dataDates = figureSingleLine(formattedDates, dates['y'], "Adverse food, dietary supplement, and cosmetic event reports since 2004")
 
+draw([], plotDates)
 ###########################################################################
 curdoc().title = "FDA analysis"
 args = curdoc().session_context.request.arguments
