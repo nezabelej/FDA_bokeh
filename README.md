@@ -1,3 +1,6 @@
+About: http://bokeh.pydata.org/en/latest/
+Database: https://open.fda.gov/
+
 Instructions:
 
 In console, type:  bokeh serve /path/to/project/folder
