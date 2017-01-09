@@ -7,3 +7,11 @@ Zato smo najprej želeli uporabiti element DatePicker, kjer bi lahko izbrali za�
 Zato smo preizkusili element DateRangeSlider, blabla..
 Slider...blabla
 Zato smo bili primorani uporabiti 2 drsnika, enega za začetno leto in drugega za končno leto.
+
+TODO:
+->hover na grafu za linije
+->kombinacije zdravil in število reakcij
+
+
+https://demo.bokehplots.com/apps/movies
+https://github.com/bokeh/bokeh/blob/master/examples/app/movies/main.py

@@ -1,9 +1,11 @@
 from bokeh.plotting import figure
-from bokeh.models import Axis
+from bokeh.models import *
 
 
 def figureSingleLine(x,y, title):
-    p = figure(title=title, plot_width=400, plot_height=400, x_axis_type='datetime')
+
+    hover = HoverTool(tooltips = [("(x,y)", "($x, $y)")])
+    p = figure(title=title, plot_width=400, plot_height=400, tools=[hover], x_axis_type='datetime')
     line = p.line(x, y, line_width=2, color="#7FC97F")
 
     return p, line.data_source
