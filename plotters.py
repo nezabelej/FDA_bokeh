@@ -9,10 +9,10 @@ def figureSingleLine(x,y):
     return p, line.data_source
 
 
-def plotHBar(data):
+def plotHBar(data, title):
 
     keys = data['x']
-    p = figure(width=500, height=350, y_range=keys)
+    p = figure(title=title, width=500, height=350, y_range=keys)
     yaxis = p.select(dict(type=Axis, layout="below"))[0]
     yaxis.formatter.use_scientific = False
     hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'])
