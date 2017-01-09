@@ -13,8 +13,15 @@ params = urllib.parse.urlencode({
 })
 
 #https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20170106]&count=patient.reaction.reactionmeddrapt.exact
-def frequentAdverseReactions(fromDate='20040101', toDate='20170107'):
+def frequentAdverseReactions(fromDate='20040101', toDate='20170107', gender=''):
     dateQuery = "receivedate:[%s+TO+%s]" % (fromDate, toDate)
+
+    if gender and gender != "All":
+        if gender == "Male":
+            genderNum = 1
+        else:
+            genderNum = 2
+        dateQuery = dateQuery+"+AND+patient.patientsex:"+str(genderNum)
 
     conn.request("GET", "/drug/event.json?search=" + dateQuery + '&count=patient.reaction.reactionmeddrapt.exact&limit=10')
     r1 = conn.getresponse()

@@ -1,0 +1,9 @@
+BOKEH
+
+Med izdelavo seminarske naloge smo opazili, da ima orodje Bokeh še kar nekaj hroščev in pomanjkljivosti:
+
+-> Ob prikazu grafa najpogostejših reakcij smo želeli na interaktiven način izvesti prikaz reakcij v različnih časovnih obdobjih.
+Zato smo najprej želeli uporabiti element DatePicker, kjer bi lahko izbrali začetni in končni datum. .....bugbug...
+Zato smo preizkusili element DateRangeSlider, blabla..
+Slider...blabla
+Zato smo bili primorani uporabiti 2 drsnika, enega za začetno leto in drugega za končno leto.

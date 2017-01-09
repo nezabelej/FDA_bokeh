@@ -15,7 +15,7 @@ def draw(controls, plot):
 
 ##########################################################################
 products = typesOfReportedProducts()
-plotProducts, dataProducts = plotHBar(products, 'What types of products are reported?')
+plotProducts, dataProducts = plotHBar(products, 'What types of food products are reported?')
 
 def productsChange():
     data = typesOfReportedProducts(productTypesSelections[selector.value])
@@ -26,7 +26,7 @@ productTypesSelections = {'All adverse event reports': '',
                           'Resulting in a serious injury or illness': 'serious',
                           'Resulting in hair loss': 'hairLoss'}
 
-selector = Select(title='Filters:', height=50, width=100, value='All adverse event reports',
+selector = Select(title='Filters:', value='All adverse event reports',
                   options=['All adverse event reports',
                            'Resulting in a serious injury or illness',
                            'Resulting in hair loss'])
@@ -36,19 +36,28 @@ draw([selector], plotProducts)
 ###########################################################################
 
 far = frequentAdverseReactions()
-plotReactions, dataReactions = plotHBar(far, "What adverse reactions are frequently reported?")
+plotReactions, dataReactions = plotHBar(far, "What adverse drug reactions are frequently reported?")
 
 def callback():
     data = frequentAdverseReactions(fromDate='20160101', toDate='20170101')
     plotReactions.y_range.factors = data['x']
     dataReactions.data['right'] = data['y']
 
-button = Button(label="Press Me")
-button.on_click(callback)
+def genderChange():
+    data = frequentAdverseReactions(gender=selectorGender.value)
+    plotReactions.y_range.factors = data['x']
+    dataReactions.data['right'] = data['y']
 
-dateSlider = Slider(width=200, start=2004, end=2017, step=1)
+selectorGender = Select(title='Gender: ', value='All',
+                  options=['All',
+                           'Female',
+                           'Male'])
+selectorGender.on_change('value', lambda attr, old, new: genderChange())
 
-draw([button, dateSlider], plotReactions)
+dateSlider1 = Slider(width=200, start=2004, end=2017, step=1)
+dateSlider2 = Slider(width=200, start=2004, end=2017, step=1)
+
+draw([selectorGender, dateSlider1, dateSlider2], plotReactions)
 ###########################################################################
 
 
