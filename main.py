@@ -74,5 +74,19 @@ desc = Div(text="This is the openFDA API endpoint for adverse food, dietary supp
 
 draw([], desc, plotDates)
 ###########################################################################
+
+###########################################################################
+#dobi 10 najpogostejsih zdravil
+
+combinations = countReactionsInCombination("BONIVA", "ROCEPHIN")
+print(combinations) #stevilo pacientov z reakcijami ob tej kombinaciji
+
+#http://bokeh.pydata.org/en/latest/docs/gallery/les_mis.html
+
+desc = Div(text="This graph represents how many reactions were caused by the combination of two drugs", width=800)
+
+#draw([], desc, plotCombinations)
+###########################################################################
+
 curdoc().title = "FDA analysis"
 args = curdoc().session_context.request.arguments

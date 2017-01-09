@@ -34,6 +34,19 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107', gender=''):
     return countToBarData(response["results"], "term", "count")
 
 
+#https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20170106]+AND+patient.drug.medicinalproduct:ROCEPHIN+AND+patient.drug.medicinalproduct:PYOSTACINE (PRISTINAMYCIN)
+def countReactionsInCombination(drugindication1, drugindication2):
+    conn.request("GET", "https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20170106]+AND+patient.drug.medicinalproduct:"+drugindication1
+                 +"+AND+patient.drug.medicinalproduct:"+drugindication2)
+
+    #encode url, da bodo delali oklepaji
+
+    r1 = conn.getresponse()
+    response = json.loads(r1.read().decode('utf-8'))
+    conn.close()
+
+    return response["meta"]["results"]["total"]
+
 #https://api.fda.gov/food/event.json?count=products.industry_name.exact
 #https://api.fda.gov/food/event.json?search=outcomes:"serious+injuries"&count=products.industry_name.exact
     #search = outcomes:"serious+injuries"

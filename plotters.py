@@ -7,7 +7,8 @@ def figureSingleLine(x,y, title):
     hover = HoverTool(tooltips = [("(x,y)", "($x, $y)")])
     p = figure(title=title, plot_width=400, plot_height=400, tools=[hover], x_axis_type='datetime')
     line = p.line(x, y, line_width=2, color="#7FC97F")
-
+#    yaxis.formatter.use_scientific = False
+    #povej da je y date mogoce
     return p, line.data_source
 
 
