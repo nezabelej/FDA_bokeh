@@ -38,24 +38,21 @@ draw([selector], plotProducts)
 far = frequentAdverseReactions()
 plotReactions, dataReactions = plotHBar(far, "What adverse drug reactions are frequently reported?")
 
-def callback():
-    data = frequentAdverseReactions(fromDate='20160101', toDate='20170101')
-    plotReactions.y_range.factors = data['x']
-    dataReactions.data['right'] = data['y']
-
-def genderChange():
-    data = frequentAdverseReactions(gender=selectorGender.value)
+def onChangeReactions():
+    data = frequentAdverseReactions(fromDate=str(dateSlider1.value)+'0101',
+                                    toDate=str(dateSlider2.value)+'0101',
+                                    gender=selectorGender.value)
     plotReactions.y_range.factors = data['x']
     dataReactions.data['right'] = data['y']
 
 selectorGender = Select(title='Gender: ', value='All',
-                  options=['All',
-                           'Female',
-                           'Male'])
-selectorGender.on_change('value', lambda attr, old, new: genderChange())
+                  options=['All', 'Female', 'Male'])
+selectorGender.on_change('value', lambda attr, old, new: onChangeReactions())
 
-dateSlider1 = Slider(width=200, start=2004, end=2017, step=1)
-dateSlider2 = Slider(width=200, start=2004, end=2017, step=1)
+dateSlider1 = Slider(width=200, start=2004, end=2016, step=1, value=2004)
+dateSlider2 = Slider(width=200, start=2005, end=2017, step=1, value=2017)
+dateSlider1.on_change('value', lambda attr, old, new: onChangeReactions())
+dateSlider2.on_change('value', lambda attr, old, new: onChangeReactions())
 
 draw([selectorGender, dateSlider1, dateSlider2], plotReactions)
 ###########################################################################
