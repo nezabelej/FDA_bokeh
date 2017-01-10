@@ -77,6 +77,13 @@ draw([], desc, plotDates)
 ###########################################################################
 
 ###########################################################################
+
+#1.povecaj na 12 zdravil, shrani rezultat!
+#2.sami s sabo imajo najvecjo stevilo? preveri
+#3.sami s sabo -> grey!
+#2.hoverTool
+#3.polepsaj kodo
+
 #dobi 10 najpogostejsih zdravil
 drugs = frequentDrugs()
 counts = np.zeros((5, 5))
