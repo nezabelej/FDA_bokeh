@@ -78,15 +78,38 @@ draw([], desc, plotDates)
 ###########################################################################
 #dobi 10 najpogostejsih zdravil
 drugs = frequentDrugs()
-print (drugs)
-combinations = countReactionsInCombination("BONIVA", "ROCEPHIN")
-print(combinations) #stevilo pacientov z reakcijami ob tej kombinaciji
+counts = np.zeros((5,5))
+i=0
+j=0
+xname = []
+yname = []
+color = ["#1f78b4"]
+alpha = []
+for d1 in drugs:
+    j = 0
+    for d2 in drugs:
+        xname.append(d1)
+        yname.append(d2)
+        counts[i,j] = countReactionsInCombination(d1, d2)
+        alpha.append(min(counts[i, j] / 4.0, 0.9) + 0.1)
+        j = j + 1
+    i = i + 1
 
 #http://bokeh.pydata.org/en/latest/docs/gallery/les_mis.html
 
+source = ColumnDataSource(data=dict(
+    xname=xname,
+    yname=yname,
+    colors=color,
+    alphas=alpha,
+    count=counts.flatten(),
+))
+
+plotCombinations = combinationsFrequency(drugs, source)
+
 desc = Div(text="This graph represents how many reactions were caused by the combination of two drugs", width=800)
 
-#draw([], desc, plotCombinations)
+draw([], desc, plotCombinations)
 ###########################################################################
 
 curdoc().title = "FDA analysis"

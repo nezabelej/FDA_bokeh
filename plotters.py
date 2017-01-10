@@ -1,12 +1,13 @@
 from bokeh.plotting import figure
 from bokeh.models import *
-
+import numpy as np
 
 def figureSingleLine(x,y, title):
 
     hover = HoverTool(tooltips = [("(x,y)", "($x, $y)")])
     p = figure(title=title, plot_width=400, plot_height=400, tools=[hover], x_axis_type='datetime')
     line = p.line(x, y, line_width=2, color="#7FC97F")
+
 #    yaxis.formatter.use_scientific = False
     #povej da je y date mogoce
     return p, line.data_source
@@ -21,3 +22,28 @@ def plotHBar(data, title):
     hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'])
 
     return p, hbar.data_source
+
+def combinationsFrequency(names, source):
+    p = figure(title="Frequency of reactions using the combination of drugs",
+               x_axis_location="above",
+               x_range=list(reversed(names)), y_range=names)
+
+    p.plot_width = 400
+    p.plot_height = 400
+    p.grid.grid_line_color = None
+    p.axis.axis_line_color = None
+    p.axis.major_tick_line_color = None
+    p.axis.major_label_text_font_size = "5pt"
+    p.axis.major_label_standoff = 0
+    p.xaxis.major_label_orientation = np.pi / 3
+
+    p.rect('xname', 'yname', 0.9, 0.9, source=source,
+           color='colors', alpha='alphas', line_color=None,
+           hover_line_color='black', hover_color='colors')
+
+    #p.select_one(HoverTool).tooltips = [
+    #    ('names', '@yname, @xname'),
+    #    ('count', '@count'),
+    #]
+
+    return p

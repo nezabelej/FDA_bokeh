@@ -42,6 +42,12 @@ def countReactionsInCombination(drugindication1, drugindication2):
     #encode url, da bodo delali oklepaji
 
     r1 = conn.getresponse()
+
+    if r1.getcode() >= 400:
+        conn.close()
+        print(r1.getcode())
+        return 0
+
     response = json.loads(r1.read().decode('utf-8'))
     conn.close()
 
@@ -64,6 +70,7 @@ def typesOfReportedProducts(search=''):
     conn.request("GET", "/food/event.json" + query + 'count=products.industry_name.exact&limit=10')
 
     r1 = conn.getresponse()
+
     response = json.loads(r1.read().decode('utf-8'))
 
     conn.close()
@@ -71,7 +78,7 @@ def typesOfReportedProducts(search=''):
 
 
 def frequentDrugs():
-    conn.request("GET", "https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20161230]&count=patient.drug.medicinalproduct.exact&limit=12")
+    conn.request("GET", "https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20161230]&count=patient.drug.medicinalproduct.exact&limit=5")
     r1 = conn.getresponse()
     response = json.loads(r1.read().decode('utf-8'))
     conn.close()
