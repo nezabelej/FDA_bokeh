@@ -70,6 +70,14 @@ def typesOfReportedProducts(search=''):
     return countToBarData(response["results"], "term", "count")
 
 
+def frequentDrugs():
+    conn.request("GET", "https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20161230]&count=patient.drug.medicinalproduct.exact&limit=12")
+    r1 = conn.getresponse()
+    response = json.loads(r1.read().decode('utf-8'))
+    conn.close()
+
+    return list(map(lambda result: result["term"], response["results"]))
+
 #https://open.fda.gov/food/event/
 #https://api.fda.gov/food/event.json?count=date_created
 def dateOfCreatedReport():

@@ -77,7 +77,8 @@ draw([], desc, plotDates)
 
 ###########################################################################
 #dobi 10 najpogostejsih zdravil
-
+drugs = frequentDrugs()
+print (drugs)
 combinations = countReactionsInCombination("BONIVA", "ROCEPHIN")
 print(combinations) #stevilo pacientov z reakcijami ob tej kombinaciji
 
