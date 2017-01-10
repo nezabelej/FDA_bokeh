@@ -45,7 +45,6 @@ def countReactionsInCombination(drugindication1, drugindication2):
 
     if r1.getcode() >= 400:
         conn.close()
-        print(r1.getcode())
         return 0
 
     response = json.loads(r1.read().decode('utf-8'))

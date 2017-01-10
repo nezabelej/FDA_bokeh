@@ -4,6 +4,7 @@ import dateutil.parser
 from bokeh.layouts import layout, widgetbox
 from fda import *
 from plotters import *
+import numpy as np
 
 
 def draw(controls, desc, plot):
@@ -78,20 +79,41 @@ draw([], desc, plotDates)
 ###########################################################################
 #dobi 10 najpogostejsih zdravil
 drugs = frequentDrugs()
-counts = np.zeros((5,5))
+counts = np.zeros((5, 5))
+
 i=0
 j=0
 xname = []
 yname = []
-color = ["#1f78b4"]
+color = []
+colormap = ["#abefa0", "#54af46", "#215b18"]
 alpha = []
+
+for d1 in drugs:
+    j = 0
+    for d2 in drugs:
+        counts[i, j] = countReactionsInCombination(d1, d2)
+        alpha.append(min(counts[i, j] / 4.0, 0.9) + 0.1)
+        j = j + 1
+    i = i + 1
+
+min = np.amin(counts)
+max = np.amax(counts)
+
+i=0
 for d1 in drugs:
     j = 0
     for d2 in drugs:
         xname.append(d1)
         yname.append(d2)
-        counts[i,j] = countReactionsInCombination(d1, d2)
-        alpha.append(min(counts[i, j] / 4.0, 0.9) + 0.1)
+        if counts[i, j] == 0:
+            color.append('lightgrey')
+        elif counts[i, j] <= max/3:
+            color.append(colormap[0])
+        elif counts[i, j] <= 2*max/3:
+            color.append(colormap[1])
+        else:
+            color.append(colormap[2])
         j = j + 1
     i = i + 1
 
