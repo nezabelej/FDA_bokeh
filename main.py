@@ -7,6 +7,7 @@ from plotters import *
 from counts import countsBefore
 import numpy as np
 from numpy import array
+from datetime import *
 
 def draw(controls, desc, plot):
     sizing_mode = 'fixed'
@@ -67,7 +68,7 @@ draw([selectorGender, dateSlider1, dateSlider2], desc, plotReactions)
 ###########################################################################
 dates = dateOfCreatedReport()
 formattedDates = list(map(lambda x: dateutil.parser.parse(x), dates['x']))
-plotDates, dataDates = figureSingleLine(formattedDates, dates['y'], "Adverse food, dietary supplement, and cosmetic event reports since 2004")
+plotDates, dataDates = figureSingleLine(formattedDates, dates['y'], "Adverse food, dietary supplement, and cosmetic event reports since 2004", "Year", "Number of reports")
 
 desc = Div(text="This is the openFDA API endpoint for adverse food, dietary supplement, "
                 "and cosmetic product events. An adverse event is submitted to the FDA to "
@@ -78,14 +79,6 @@ draw([], desc, plotDates)
 ###########################################################################
 
 ###########################################################################
-
-#1.povecaj na 12 zdravil, shrani rezultat!
-#2.sami s sabo imajo najvecjo stevilo? preveri
-#3.sami s sabo -> grey!
-#2.hoverTool
-#3.polepsaj kodo
-
-#dobi 10 najpogostejsih zdravil
 drugs = frequentDrugs()
 counts = np.zeros((10,10))
 

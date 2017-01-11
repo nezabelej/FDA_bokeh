@@ -2,10 +2,10 @@ from bokeh.plotting import figure
 from bokeh.models import *
 import numpy as np
 
-def figureSingleLine(x,y, title):
+def figureSingleLine(x,y, title, xlabel, ylabel):
 
     hover = HoverTool(tooltips = [("(x,y)", "($x, $y)")])
-    p = figure(title=title, plot_width=400, plot_height=400, tools=[hover], x_axis_type='datetime')
+    p = figure(title=title, plot_width=400, plot_height=400, tools=[hover], x_axis_type='datetime', x_axis_label=xlabel, y_axis_label=ylabel)
     line = p.line(x, y, line_width=2, color="#7FC97F")
 
 #    yaxis.formatter.use_scientific = False
@@ -47,3 +47,14 @@ def combinationsFrequency(names, source):
     ]
 
     return p
+
+
+def plotBarChart(data, title):
+    keys = data['x']
+
+    p = figure(title=title, width=500, height=350, x_range=keys)
+    xaxis = p.select(dict(type=Axis, layout="below"))[0]
+    # xaxis.formatter.use_scientific = False
+    vbar = p.vbar(x=range(1, len(data['x']) + 1), width=0.04, top=data['y'])
+
+    return p, vbar.data_source

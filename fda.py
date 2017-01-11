@@ -96,6 +96,38 @@ def dateOfCreatedReport():
     return countToBarData(response["results"], "time", "count")
 
 
+# https://open.fda.gov/food/enforcement/
+# https://api.fda.gov/food/enforcement.json?count=state&limit=?
+def productionCities(top=10):
+    query = "/food/enforcement.json?count=state&limit=%s" % (top)
+
+    conn.request("GET", query)
+
+    r1 = conn.getresponse()
+    response = json.loads(r1.read().decode('utf-8'))
+
+    conn.close()
+    return countToBarData(response["results"], "term", "count")
+
+
+# https://open.fda.gov/food/enforcement/
+# https://api.fda.gov/food/enforcement.json?search=recall_initiation_date:[20150101+TO+20171231]&count=recall_initiation_date
+def recallByYear(fromDate='20150101', toDate='20171231'):
+    query = "recall_initiation_date:[%s+TO+%s]&count=recall_initiation_date" % (fromDate, toDate)
+
+    print(query)
+    conn.request("GET", "/food/enforcement.json?search=" + query)
+    r1 = conn.getresponse()
+
+    if r1.getcode() >= 400:
+        conn.close()
+        return 0
+
+    response = json.loads(r1.read().decode('utf-8'))
+
+    conn.close()
+
+    return countToBarData(response["results"], "time", "count")
 
 def countToBarData(countResults, xName, yName):
     x = list(map(lambda result: result[xName], countResults))
