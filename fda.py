@@ -77,7 +77,7 @@ def typesOfReportedProducts(search=''):
 
 
 def frequentDrugs():
-    conn.request("GET", "https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20161230]&count=patient.drug.medicinalproduct.exact&limit=5")
+    conn.request("GET", "https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20161230]&count=patient.drug.medicinalproduct.exact&limit=10")
     r1 = conn.getresponse()
     response = json.loads(r1.read().decode('utf-8'))
     conn.close()

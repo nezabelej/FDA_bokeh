@@ -4,6 +4,7 @@ import dateutil.parser
 from bokeh.layouts import layout, widgetbox
 from fda import *
 from plotters import *
+from counts import countsBefore
 import numpy as np
 
 
@@ -86,7 +87,7 @@ draw([], desc, plotDates)
 
 #dobi 10 najpogostejsih zdravil
 drugs = frequentDrugs()
-counts = np.zeros((5, 5))
+counts = np.zeros((10,10))
 
 i=0
 j=0
@@ -96,13 +97,18 @@ color = []
 colormap = ["#abefa0", "#54af46", "#215b18"]
 alpha = []
 
-for d1 in drugs:
-    j = 0
-    for d2 in drugs:
-        counts[i, j] = countReactionsInCombination(d1, d2)
-        alpha.append(min(counts[i, j] / 4.0, 0.9) + 0.1)
-        j = j + 1
-    i = i + 1
+# for d1 in drugs:
+#     j = 0
+#     for d2 in drugs:
+#         if d1 == d2:
+#             counts[i,j] = 0
+#         else:
+#             counts[i, j] = countReactionsInCombination(d1, d2)
+#         j = j + 1
+#     i = i + 1
+
+#Instead of 100 queries we use data queried from before
+counts = countsBefore
 
 min = np.amin(counts)
 max = np.amax(counts)
@@ -113,11 +119,12 @@ for d1 in drugs:
     for d2 in drugs:
         xname.append(d1)
         yname.append(d2)
-        if counts[i, j] == 0:
+        alpha.append(np.amin([counts[i][j] / 4.0, 0.9]) + 0.1)
+        if counts[i][j] == 0:
             color.append('lightgrey')
-        elif counts[i, j] <= max/3:
+        elif counts[i][j] <= max/3:
             color.append(colormap[0])
-        elif counts[i, j] <= 2*max/3:
+        elif counts[i][j] <= 2*max/3:
             color.append(colormap[1])
         else:
             color.append(colormap[2])
