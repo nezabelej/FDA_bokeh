@@ -1,6 +1,15 @@
 from bokeh.plotting import figure
 from bokeh.models import *
 import numpy as np
+from bokeh.layouts import layout, widgetbox
+from bokeh.plotting import curdoc
+
+def draw(controls, desc, plot):
+    sizing_mode = 'fixed'
+    inputs = widgetbox(*controls, sizing_mode=sizing_mode)
+    l = layout(
+        [[desc], [inputs, plot]], sizing_mode=sizing_mode)
+    curdoc().add_root(l)
 
 def figureSingleLine(x,y, title, xlabel, ylabel):
 
@@ -13,20 +22,20 @@ def figureSingleLine(x,y, title, xlabel, ylabel):
     return p, line.data_source
 
 
-def plotHBar(data, title):
+def plotHBar(data, title, xlabel, ylabel):
 
     keys = data['x']
-    p = figure(title=title, width=500, height=350, y_range=keys)
+    p = figure(title=title, width=500, height=350, y_range=keys, x_axis_label=xlabel, y_axis_label=ylabel)
     yaxis = p.select(dict(type=Axis, layout="below"))[0]
     yaxis.formatter.use_scientific = False
     hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'])
 
     return p, hbar.data_source
 
-def combinationsFrequency(names, source):
+def combinationsFrequency(names, source, xlabel, ylabel):
     p = figure(title="Frequency of reactions using the combination of drugs",
                x_axis_location="above", tools="hover,save",
-               x_range=list(reversed(names)), y_range=names)
+               x_range=list(reversed(names)), y_range=names, x_axis_label=xlabel, y_axis_label=ylabel)
 
     p.plot_width = 400
     p.plot_height = 400

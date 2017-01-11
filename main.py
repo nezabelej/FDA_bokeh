@@ -1,24 +1,14 @@
-from bokeh.models import *
-from bokeh.plotting import curdoc
 import dateutil.parser
-from bokeh.layouts import layout, widgetbox
 from fda import *
 from plotters import *
 from counts import countsBefore
 import numpy as np
 from numpy import array
-from datetime import *
-
-def draw(controls, desc, plot):
-    sizing_mode = 'fixed'
-    inputs = widgetbox(*controls, sizing_mode=sizing_mode)
-    l = layout(
-        [[desc], [inputs, plot]], sizing_mode=sizing_mode)
-    curdoc().add_root(l)
 
 ##########################################################################
+
 products = typesOfReportedProducts()
-plotProducts, dataProducts = plotHBar(products, 'What types of food products are reported?')
+plotProducts, dataProducts = plotHBar(products, 'What types of food products are reported?', "Quantity", "Type of product")
 
 def productsChange():
     data = typesOfReportedProducts(productTypesSelections[selector.value])
@@ -40,9 +30,11 @@ desc = Div(text="Certain product types have more adverse events associated with 
                 "partly because manufacturers and distributors are required to report them.", width=800)
 
 draw([selector], desc, plotProducts)
+
 ###########################################################################
+
 far = frequentAdverseReactions()
-plotReactions, dataReactions = plotHBar(far, "What adverse drug reactions are frequently reported?")
+plotReactions, dataReactions = plotHBar(far, "What adverse drug reactions are frequently reported?", "Quantity", "Reaction")
 
 def onChangeReactions():
     data = frequentAdverseReactions(fromDate=str(dateSlider1.value)+'0101',
@@ -65,7 +57,9 @@ desc = Div(text="Adverse reactions range from product quality issues to very ser
                 "vary with different search criteria.", width=800)
 
 draw([selectorGender, dateSlider1, dateSlider2], desc, plotReactions)
+
 ###########################################################################
+
 dates = dateOfCreatedReport()
 formattedDates = list(map(lambda x: dateutil.parser.parse(x), dates['x']))
 plotDates, dataDates = figureSingleLine(formattedDates, dates['y'], "Adverse food, dietary supplement, and cosmetic event reports since 2004", "Year", "Number of reports")
@@ -76,9 +70,9 @@ desc = Div(text="This is the openFDA API endpoint for adverse food, dietary supp
                 "dietary supplements, and cosmetics.", width=800)
 
 draw([], desc, plotDates)
-###########################################################################
 
 ###########################################################################
+
 drugs = frequentDrugs()
 counts = np.zeros((10,10))
 
@@ -124,7 +118,7 @@ for d1 in drugs:
         j = j + 1
     i = i + 1
 
-#http://bokeh.pydata.org/en/latest/docs/gallery/les_mis.html
+#HELP: http://bokeh.pydata.org/en/latest/docs/gallery/les_mis.html
 
 source = ColumnDataSource(data=dict(
     xname=xname,
@@ -134,11 +128,12 @@ source = ColumnDataSource(data=dict(
     count=counts.flatten(),
 ))
 
-plotCombinations = combinationsFrequency(drugs, source)
+plotCombinations = combinationsFrequency(drugs, source, "Drug name", "Drug name")
 
 desc = Div(text="This graph represents how many reactions were caused by the combination of two drugs", width=800)
 
 draw([], desc, plotCombinations)
+
 ###########################################################################
 
 curdoc().title = "FDA analysis"
