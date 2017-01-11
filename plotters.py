@@ -25,7 +25,7 @@ def plotHBar(data, title):
 
 def combinationsFrequency(names, source):
     p = figure(title="Frequency of reactions using the combination of drugs",
-               x_axis_location="above",
+               x_axis_location="above", tools="hover,save",
                x_range=list(reversed(names)), y_range=names)
 
     p.plot_width = 400
@@ -41,9 +41,9 @@ def combinationsFrequency(names, source):
            color='colors', alpha='alphas', line_color=None,
            hover_line_color='black', hover_color='colors')
 
-    #p.select_one(HoverTool).tooltips = [
-    #    ('names', '@yname, @xname'),
-    #    ('count', '@count'),
-    #]
+    p.select_one(HoverTool).tooltips = [
+        ('names', '@yname, @xname'),
+        ('count', '@count'),
+    ]
 
     return p
