@@ -6,7 +6,7 @@ from fda import *
 from plotters import *
 from counts import countsBefore
 import numpy as np
-
+from numpy import array
 
 def draw(controls, desc, plot):
     sizing_mode = 'fixed'
@@ -108,7 +108,7 @@ alpha = []
 #     i = i + 1
 
 #Instead of 100 queries we use data queried from before
-counts = countsBefore
+counts = array(countsBefore)
 
 min = np.amin(counts)
 max = np.amax(counts)
@@ -119,12 +119,12 @@ for d1 in drugs:
     for d2 in drugs:
         xname.append(d1)
         yname.append(d2)
-        alpha.append(np.amin([counts[i][j] / 4.0, 0.9]) + 0.1)
-        if counts[i][j] == 0:
+        alpha.append(np.amin([counts[i, j] / 4.0, 0.9]) + 0.1)
+        if counts[i, j] == 0:
             color.append('lightgrey')
-        elif counts[i][j] <= max/3:
+        elif counts[i, j] <= max/3:
             color.append(colormap[0])
-        elif counts[i][j] <= 2*max/3:
+        elif counts[i, j] <= 2*max/3:
             color.append(colormap[1])
         else:
             color.append(colormap[2])
