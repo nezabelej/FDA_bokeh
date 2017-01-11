@@ -7,8 +7,9 @@ from bokeh.plotting import curdoc
 def draw(controls, desc, plot):
     sizing_mode = 'fixed'
     inputs = widgetbox(*controls, sizing_mode=sizing_mode)
+    blank = Div(text="\n", width=800)
     l = layout(
-        [[desc], [inputs, plot]], sizing_mode=sizing_mode)
+        [[desc], [inputs, plot], [blank]], sizing_mode=sizing_mode)
     curdoc().add_root(l)
 
 def figureSingleLine(x,y, title, xlabel, ylabel):
@@ -33,7 +34,7 @@ def plotHBar(data, title, xlabel, ylabel):
     return p, hbar.data_source
 
 def combinationsFrequency(names, source, xlabel, ylabel):
-    p = figure(title="Frequency of reactions using the combination of drugs",
+    p = figure(title="Frequency of reactions using drug combination",
                x_axis_location="above", tools="hover,save",
                x_range=list(reversed(names)), y_range=names, x_axis_label=xlabel, y_axis_label=ylabel)
 
