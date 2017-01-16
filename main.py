@@ -63,7 +63,6 @@ draw([selectorGender, dateSlider1, dateSlider2], desc, plotReactions)
 dates = dateOfCreatedReport()
 formattedDates = list(map(lambda x: dateutil.parser.parse(x), dates['x']))
 plotDates, dataDates = figureSingleLine(formattedDates, dates['y'], "Adverse food, dietary supplement, and cosmetic event reports since 2004", "Year", "Number of reports")
-
 desc = Div(text="This is the openFDA API endpoint for adverse food, dietary supplement, "
                 "and cosmetic product events. An adverse event is submitted to the FDA to "
                 "report adverse health effects and product complaints about food, "
