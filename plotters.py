@@ -25,8 +25,9 @@ def figureSingleLine(x,y, title, xlabel, ylabel):
     ds = ColumnDataSource({'x': x, 'y': y, 'diff': perctentageDiffs})
 
     hover = HoverTool(tooltips = [("(x,y)", "($x, $y)")])
-    p = figure(title=title, plot_width=400, plot_height=400, tools=[hover], x_axis_type='datetime', x_axis_label=xlabel, y_axis_label=ylabel)
-    line = p.line("x", "y", source=ds, line_width=2, color="#7FC97F")
+    p = figure(title=title, plot_width=550, plot_height=500, x_axis_type='datetime', x_axis_label=xlabel, y_axis_label=ylabel)
+    line = p.line("x", "y", source=ds, line_width=3, color="#7FC97F")
+    circle = p.circle(x, y, size=10, color="navy", alpha=0.5)
     labels = LabelSet(x="x", y="y", text="diff", y_offset=8,
                       text_font_size="8pt", text_color="#555555",
                       source=ds, text_align='center')

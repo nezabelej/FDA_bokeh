@@ -47,8 +47,8 @@ selectorGender = Select(title='Gender: ', value='All',
                   options=['All', 'Female', 'Male'])
 selectorGender.on_change('value', lambda attr, old, new: onChangeReactions())
 
-dateSlider1 = Slider(width=200, start=2004, end=2016, step=1, value=2004)
-dateSlider2 = Slider(width=200, start=2005, end=2017, step=1, value=2017)
+dateSlider1 = Slider(title='From', width=200, start=2004, end=2016, step=1, value=2004)
+dateSlider2 = Slider(title='To', width=200, start=2005, end=2017, step=1, value=2017)
 dateSlider1.on_change('value', lambda attr, old, new: onChangeReactions())
 dateSlider2.on_change('value', lambda attr, old, new: onChangeReactions())
 
