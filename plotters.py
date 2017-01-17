@@ -12,15 +12,26 @@ def draw(controls, desc, plot):
         [[desc], [inputs, plot], [blank]], sizing_mode=sizing_mode)
     curdoc().add_root(l)
 
+def figureSingleLine(x,y, title, xlabel, ylabel):
+    perctentageDiffs = [""]
 
-def figureSingleLine(x, y, title, xlabel, ylabel):
+    for i in range(1, len(y)):
+        d = (y[i] - y[i-1])/y[i-1] * 100
+        plus = "+"
+        if d < 0:
+            plus = ""
+        perctentageDiffs.append(("%s%.2f" % (plus, d)) + "%")
+
+    ds = ColumnDataSource({'x': x, 'y': y, 'diff': perctentageDiffs})
 
     hover = HoverTool(tooltips = [("(x,y)", "($x, $y)")])
     p = figure(title=title, plot_width=400, plot_height=400, tools=[hover], x_axis_type='datetime', x_axis_label=xlabel, y_axis_label=ylabel)
-    line = p.line(x, y, line_width=2, color="#7FC97F")
+    line = p.line("x", "y", source=ds, line_width=2, color="#7FC97F")
+    labels = LabelSet(x="x", y="y", text="diff", y_offset=8,
+                      text_font_size="8pt", text_color="#555555",
+                      source=ds, text_align='center')
+    p.add_layout(labels)
 
-#    yaxis.formatter.use_scientific = False
-    #povej da je y date mogoce
     return p, line.data_source
 
 
