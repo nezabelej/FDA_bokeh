@@ -12,7 +12,8 @@ def draw(controls, desc, plot):
         [[desc], [inputs, plot], [blank]], sizing_mode=sizing_mode)
     curdoc().add_root(l)
 
-def figureSingleLine(x,y, title, xlabel, ylabel):
+
+def figureSingleLine(x, y, title, xlabel, ylabel):
 
     hover = HoverTool(tooltips = [("(x,y)", "($x, $y)")])
     p = figure(title=title, plot_width=400, plot_height=400, tools=[hover], x_axis_type='datetime', x_axis_label=xlabel, y_axis_label=ylabel)
@@ -32,6 +33,7 @@ def plotHBar(data, title, xlabel, ylabel):
     hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'])
 
     return p, hbar.data_source
+
 
 def combinationsFrequency(names, source, xlabel, ylabel):
     p = figure(title="Frequency of reactions using drug combination",
