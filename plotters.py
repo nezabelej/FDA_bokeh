@@ -44,9 +44,9 @@ def plotHBar(data, title, xlabel, ylabel):
     yaxis.formatter.use_scientific = False
 
     if 'All' in data:
-        hbarAll = p.hbar(y=np.arange(1.0, len(data['x']) + 1.0, 1), height=0.04, right=data['All'], color='orange')
-        hbarMale = p.hbar(y=np.arange(1.2, len(data['x']) + 1.2, 1), height=0.04, right=data['Male'], color='blue')
-        hbarFemale = p.hbar(y=np.arange(1.4, len(data['x']) + 1.4, 1), height=0.04, right=data['Female'], color='red')
+        hbarAll = p.hbar(y=np.arange(1.0, len(data['x']) + 1.0, 1), height=0.04, right=data['All'], color='orange', legend="All")
+        hbarMale = p.hbar(y=np.arange(1.2, len(data['x']) + 1.2, 1), height=0.04, right=data['Male'], color='blue', legend="Male")
+        hbarFemale = p.hbar(y=np.arange(1.4, len(data['x']) + 1.4, 1), height=0.04, right=data['Female'], color='red', legend="Female")
 
         return p, hbarAll.data_source, hbarMale.data_source, hbarFemale.data_source
     else:
