@@ -26,13 +26,29 @@ Podatki, namenjeni prenosu, so razbiti na veliko število datotek v JSON formatu
 Za zagon projekta je potrebno imeti nameščeno orodje Anaconda. Nato iz konzole Bash ali pa Windows-ovega CMD-ja zaženemo ukaz: \\ \textit{conda install bokeh} \\
 Nato se premaknemo v direktorij, ki vsebuje main.py našega projekta in natipkamo ukaz: \\ \textit{bokeh serve .} \\ V brskalniku se pomaknemo na \textit{localhost:5006}. 5006 tukaj predstavlja številko vrat (port), ki se nam ob zagonu strežnika izpiše v konzoli. 
 \section{Analiza podatkov}
-\subsection{prvi}
+\subsection{Število poročil o stranskih učinkih glede na neko kombinacijo zdravil}
+Graf nam ponazarja število poročanih stranskih učinkov glede na kombinacijo dveh zdravil. Siva barva pomeni, da ni bilo poročanj o reakcijah; bolj intenzivna barva pomeni večje število poročanih reakcij. Na spodnji sliki tako vidimo, da se največje število stranskih učinkov pojavi pri zdravilih Methotrexate in Humira ter Methotrexate in Enbrel. Ob premiku na želen kvadratek se nam prikažejo imena zdravil in število poročanj.
+Za vizualizacijo grafa smo opravili dvojno poizvedovanje:
+\begin{itemize}
+\item{Pridobitev 10 najpogostejših zdravil: \\ \\ https://api.fda.gov/drug/event.json?\newline search=receivedate:[20040101+TO+20161230] \newline \&count=patient.drug.medicinalproduct.exact\&limit=10}
+\item{Štetje poročanj pri tej kombinaciji zdravil: \\ \\ https://api.fda.gov/drug/event.json? \newline search=receivedate:[20040101+TO+20170106] \newline +AND+patient.drug.medicinalproduct:REVLIMID \newline   +AND+patient.drug.medicinalproduct:HUMIRA}
+\end{itemize}
 
-%\begin{figure}[H]
- % \caption{Input image.}
-  %\centering
-    %\includegraphics[width=0.7\textwidth]{0099.png}
-%\end{figure}
+\begin{figure}[H]
+  \caption{Število poročil o stranskih učinkih glede na kombinacijo dveh zdravil}
+  \centering
+    \includegraphics[width=1\textwidth]{kombinacije.png}
+\end{figure}
+
+\subsection{Najpogostejši stranski učinki}
+V spodnjem grafu prikazujemo najpogostejše stranske učinke. Na abscisni osi imamo tako ponazorjeno število poročanj za neko reakcijo. Graf nam omogoča sortiranje glede na spol, čeprav je prikaz obeh spolov ves čas prikazan na grafu. To nam omogoča transparentno pregledovanje podatkov. Filtriranje je možno tudi glede na leto: izberemo lahko začetno in končno leto, torej obdobje, za katero nas zanima število poročanih stranskih učinkov. Poizvedba: \\
+
+https://api.fda.gov/drug/event.json? \newline search=receivedate:[20040101+TO+20170106]+AND+ \newline patient.patientsex:2\& \newline count=patient.reaction.reactionmeddrapt.exact \\
+\begin{figure}[H]
+  \caption{Najpogostejši stranski učinki}
+  \centering
+    \includegraphics[width=1\textwidth]{reakcije.png}
+\end{figure}
 
 \section{Reference}
 http://bokeh.pydata.org/en/latest/ \\
