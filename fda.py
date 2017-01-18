@@ -17,24 +17,30 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107', gender=''):
     dateQuery = "receivedate:[%s+TO+%s]" % (fromDate, toDate)
     q = dateQuery
     genderNum = 0
+    print(gender)
     if gender and gender != "All":
         if gender == "Male":
             genderNum = 1
         else:
             genderNum = 2
         q = q + "+AND+patient.patientsex:"+str(genderNum)
+    else:
+        q = q + "+AND+patient.patientsex:[1+TO+2]"
 
+    req =  "/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact&limit=10'
+    conn.request("GET", req)
 
-    conn.request("GET", "/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact&limit=10')
     r1 = conn.getresponse()
     response = json.loads(r1.read().decode('utf-8'))
 
     barData = countToBarData(response["results"], "term", "count")
-    terms = barData['x']
+    print(req)
+    print(barData['x'])
+    print(barData['y'])
 
     dateQuery += "+AND+("
     i = 1
-    for term in terms:
+    for term in barData['x']:
         dateQuery = dateQuery + "patient.reaction.reactionmeddrapt.exact:%s" % urllib.parse.quote(term)  + "+OR+"
 
     dateQuery = dateQuery[:-4]
@@ -42,24 +48,28 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107', gender=''):
 
     q = dateQuery
     if genderNum != 0:
-        conn.request("GET", "/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact&limit=10')
+        print("ALL query")
+        q = q + "+AND+patient.patientsex:[1+TO+2]"
+        req = "/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact'
+        print(req)
+        conn.request("GET", req)
         r1 = conn.getresponse()
         response = json.loads(r1.read().decode('utf-8'))
-        barData['All'] = countToBarData(response["results"], "term", "count")['y']
+        barData['All'] = addBarData(barData, countToBarData(response["results"], "term", "count"))
     else:
         barData['All'] = barData['y']
 
 
     q = dateQuery
     if genderNum != 1:
+        print("Male query")
         q = q + "+AND+patient.patientsex:1"
-        print("/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact&limit=10')
-        conn.request("GET", "/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact&limit=10')
+        req = "/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact'
+        print(req)
+        conn.request("GET", req)
         r2 = conn.getresponse()
-        print(r2.code)
-        print(r2.reason)
         response = json.loads(r2.read().decode('utf-8'))
-        barData['Male'] = countToBarData(response["results"], "term", "count")['y']
+        barData['Male'] = addBarData(barData, countToBarData(response["results"], "term", "count"))
     else:
         barData['Male'] = barData['y']
 
@@ -67,17 +77,34 @@ def frequentAdverseReactions(fromDate='20040101', toDate='20170107', gender=''):
 
     q = dateQuery
     if genderNum != 2:
+        print("Female query")
         q = q + "+AND+patient.patientsex:2"
-        conn.request("GET", "/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact&limit=10')
+        req = "/drug/event.json?search=" + q + '&count=patient.reaction.reactionmeddrapt.exact'
+        print(req)
+        conn.request("GET", req)
         r3 = conn.getresponse()
         response = json.loads(r3.read().decode('utf-8'))
-        barData['Female'] = countToBarData(response["results"], "term", "count")['y']
+        barData['Female'] = addBarData(barData, countToBarData(response["results"], "term", "count"))
     else:
         barData['Female'] = barData['y']
 
 
     return barData
 
+def addBarData(barData, newBarData):
+    newY = [0] * len(barData['x'])
+
+    i = 0
+    for x in newBarData['x']:
+        if x in barData['x']:
+            yi = barData['x'].index(x)
+            newY[yi] = newBarData['y'][i]
+        i += 1
+
+    print(barData['x'])
+    print(newY)
+
+    return newY
 
 #https://api.fda.gov/drug/event.json?search=receivedate:[20040101+TO+20170106]+AND+patient.drug.medicinalproduct:ROCEPHIN+AND+patient.drug.medicinalproduct:PYOSTACINE (PRISTINAMYCIN)
 def countReactionsInCombination(drugindication1, drugindication2):
