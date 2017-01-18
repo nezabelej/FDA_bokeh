@@ -169,7 +169,7 @@ def dateOfCreatedReport():
 
 
 # https://open.fda.gov/food/enforcement/
-# https://api.fda.gov/food/enforcement.json?count=state&limit=?
+# https://api.fda.gov/food/enforcement.json?count=state
 def productionCities(top=10):
     query = "/food/enforcement.json?count=state&limit=%s" % (top)
 
