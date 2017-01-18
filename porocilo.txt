@@ -4,13 +4,3 @@ https://github.com/bokeh/bokeh/blob/master/examples/app/movies/main.py
 https://open.fda.gov/update/openfda-now-allows-direct-downloads-of-data
 
 http://bokeh.pydata.org/en/0.11.0/docs/user_guide/server.html
-
-
-OpenFDA is designed primarily for queries against our powerful search API.
-
-API ima implementiran Elastic search, tudi poizvedbe so v Elastic Search sintaksi.
-Če bi hoteli bazo imeti lokalno, bi morali za hitre poizvedbe prav tako implementirati Elastic Search.
-
-Če bi hotla v MySQL: treba bi bilo na roke procesirat in na roke normalizirat, stringe na roke joinat...
-
-To keep your downloaded data up to date, you need to re-download the data every time it is updated. 

@@ -5,6 +5,21 @@ Arhitektura Bokeha sestoji iz dveh delov: izdelava grafov z programskem jeziku P
 OpenFDA (Food and Drug Administration) nam na svojih straneh omogoča dostop do 100 GB velike množice podatkov, kjer lahko poizvedujemo o medicinskih poročilih o zdravilih in hrani; na primer stranski učinki zdravil ali odpoklic prehrambenih produktov. OpenFDA je namenjena predvsem za poizvedbe preko njihovega zmogljivega API-ja, ki ima v ozadju implementiran učinkovit Elastic Search. Ta nam omogoča hitro in preprosto poizvedovanje po podatkih. 
 Podatki, namenjeni prenosu, so razbiti na veliko število datotek v JSON formatu, kar pomeni dokumentno in nenormalizirano obliko, ki omogoča hitro iskanje. Če želimo prenesti podatke, moramo paziti, da ob vsaki posodobitvi podatkov znova prenesemo celotno zbirko podatkov.
 
+Graf nam ponazarja stevilo porocanih stranskih ucinkov glede na kombinacijo
+dveh zdravil. Siva barva pomeni, da ni bilo porocanj o reakcijah; bolj intenzivna
+barva pomeni vecje stevilo porocanih reakcij. Na spodnji sliki tako vidimo, da se
+najvecje stevilo stranskih ucinkov pojavi pri zdravilih Methotrexate in Humira
+ter Methotrexate in Enbrel. Ob premiku na zelen kvadratek se nam prikazejo
+imena zdravil in stevilo porocanj. Za vizualizacijo grafa smo opravili dvojno
+poizvedovanje:
+
+
+V spodnjem grafu prikazujemo najpogostejse stranske ucinke. Na abscisni osi
+imamo tako ponazorjeno stevilo porocanj za neko reakcijo. Graf nam omogoca
+sortiranje glede na spol, ceprav je prikaz obeh spolov ves cas prikazan na grafu.
+To nam omogoca transparentno pregledovanje podatkov. Filtriranje je mozno
+tudi glede na leto: izberemo lahko zacetno in koncno leto, torej obdobje, za
+katero nas zanima stevilo porocanih stranskih ucinkov. Poizvedba:
 ---
 Podatki so v dokumentni, nenormalizirani obliki, kar omogoča hitro iskanje.
 Normalizacija in vpeljava MySql bi bila nesmiselna, saj je iskanje z relacijsko bazo počasnejše.
