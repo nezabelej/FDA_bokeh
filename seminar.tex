@@ -4,7 +4,7 @@
 \usepackage{float}
 
 \title{Analiza podatkov Food And Drug Administration z orodjem Bokeh}
-\author{Neža Belej (63120340), Matej Dolenc (631xxxxx)}
+\author{Neža Belej (63120340), Matej Dolenc (63120178)}
 
 \begin{document}
 
@@ -21,7 +21,7 @@ Zato smo najprej želeli uporabiti element DatePicker, kjer bi lahko izbrali za�
 
 \section{OpenFDA}
 OpenFDA (Food and Drug Administration) nam na svojih straneh omogoča dostop do 100 GB velike množice podatkov, kjer lahko poizvedujemo o medicinskih poročilih o zdravilih in hrani; na primer stranski učinki zdravil ali odpoklic prehrambenih produktov. OpenFDA je namenjena predvsem za poizvedbe preko njihovega zmogljivega API-ja, ki ima v ozadju implementiran učinkovit Elastic Search. Ta nam omogoča hitro in preprosto poizvedovanje po podatkih. \\
-Podatki, namenjeni prenosu, so razbiti na veliko število datotek v JSON formatu. Če želimo prenesti podatke, moramo paziti, da ob vsaki posodobitvi podatkov znova prenesemo celotno zbirko podatkov.
+Podatki, namenjeni prenosu, so razbiti na veliko število datotek v JSON formatu. Če želimo prenesti podatke, moramo paziti, da ob vsaki posodobitvi podatkov znova prenesemo celotno zbirko podatkov. Podatki so v dokumentni, nenormalizirani obliki, kar omogoča hitro iskanje.
 \section{Navodila za izvajanje}
 Za zagon projekta je potrebno imeti nameščeno orodje Anaconda. Nato iz konzole Bash ali pa Windows-ovega CMD-ja zaženemo ukaz: \\ \textit{conda install bokeh} \\
 Nato se premaknemo v direktorij, ki vsebuje main.py našega projekta in natipkamo ukaz: \\ \textit{bokeh serve .} \\ V brskalniku se pomaknemo na \textit{localhost:5006}. 5006 tukaj predstavlja številko vrat (port), ki se nam ob zagonu strežnika izpiše v konzoli. 
