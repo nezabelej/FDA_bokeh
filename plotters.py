@@ -42,7 +42,6 @@ def plotHBar(data, title, xlabel, ylabel):
     p = figure(title=title, width=500, height=350, y_range=keys, x_axis_label=xlabel, y_axis_label=ylabel)
     yaxis = p.select(dict(type=Axis, layout="below"))[0]
     yaxis.formatter.use_scientific = False
-    hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'], color='blue')
 
     if 'All' in data:
         hbarAll = p.hbar(y=np.arange(1.0, len(data['x']) + 1.0, 1), height=0.04, right=data['All'], color='orange')
@@ -50,7 +49,8 @@ def plotHBar(data, title, xlabel, ylabel):
         hbarFemale = p.hbar(y=np.arange(1.4, len(data['x']) + 1.4, 1), height=0.04, right=data['Female'], color='red')
 
         return p, hbarAll.data_source, hbarMale.data_source, hbarFemale.data_source
-
+    else:
+        hbar = p.hbar(y=range(1, len(data['x']) + 1), height=0.04, right=data['y'], color='blue')
     return p, hbar.data_source
 
 
