@@ -49,8 +49,8 @@ selectorGender = Select(title='Gender: ', value='All',
                   options=['All', 'Female', 'Male'])
 selectorGender.on_change('value', lambda attr, old, new: onChangeReactions())
 
-dateSlider1 = Slider(title='From', width=200, start=2004, end=2016, step=1, value=2004)
-dateSlider2 = Slider(title='To', width=200, start=2005, end=2017, step=1, value=2017)
+dateSlider1 = Slider(title='From\n', width=200, start=2004, end=2016, step=1, value=2004)
+dateSlider2 = Slider(title='To\n', width=200, start=2005, end=2017, step=1, value=2017)
 dateSlider1.on_change('value', lambda attr, old, new: onChangeReactions())
 dateSlider2.on_change('value', lambda attr, old, new: onChangeReactions())
 
@@ -134,6 +134,130 @@ plotCombinations = combinationsFrequency(drugs, source, "Drug name", "Drug name"
 desc = Div(text="This graph represents how many reactions were caused by the combination of two drugs", width=800)
 
 draw([], desc, plotCombinations)
+
+###########################################################################
+###########################################################################
+# mesta z največjo produkcijo
+production = productionCities()
+
+production['x'] = [x.upper() for x in production['x']]
+
+plotCities, dataCities = plotHBar2(production, "Which cities produce the most food products?")
+
+
+def onChangeTopCities():
+    data = productionCities(top=textInput.value)
+    data['x'] = [x.upper() for x in data['x']]
+    plotCities.y_range.factors = data['x']
+    dataCities.data['right'] = data['y']
+
+    dataCities.data['y'] = list(range(1, int(textInput.value) + 1))
+    print(dataCities.data['y'])
+    print(dataCities.data['right'])
+
+
+textInput = TextInput(value="10", title="Number of cities:")
+textInput.on_change('value', lambda attr, old, new: onChangeTopCities())
+
+desc = Div(text="OpenFDA: Food recall enforcement reports. Food production in cities from lowest to highest.",
+           width=800)
+
+draw([textInput], desc, plotCities)
+###########################################################################
+
+
+###########################################################################
+# odpoklic po letih
+recall = recallByYear()
+
+# print(recall)
+trueX = []
+trueY = []
+
+for i in range(0, len(recall['x'])):
+    year = recall['x'][i][0:4]
+    # print(year)
+    if (year in trueX):
+        idx = trueX.index(year)
+    else:
+        trueX.append(year)
+        idx = trueX.index(year)
+
+    if (len(trueY) < idx + 1):
+        trueY.append(1)
+    else:
+        trueY[idx] = trueY[idx] + 1
+
+recall2 = {'x': trueX, 'y': trueY}
+
+# plotRecall, dataRecall = plotBarChart(recall2, "Recall by year")
+plotRecall, dataRecall = plotHBar2(recall2, "Recall by year")
+
+
+def onChangeRecallDate():
+    print(begin.value)
+    print(end.value)
+    bV = begin.value
+    eV = end.value
+
+    bVStr = bV.strftime('%Y%m%d')
+    eVStr = eV.strftime('%Y%m%d')
+
+    print(bVStr)
+    print(eVStr)
+
+    data = recallByYear(fromDate=bVStr, toDate=eVStr)
+
+    # print(data['x'])
+    # print(data['y'])
+
+    trueX = []
+    trueY = []
+
+    for i in range(0, len(data['x'])):
+        year = data['x'][i][0:4]
+        # print(year)
+        if (year in trueX):
+            idx = trueX.index(year)
+        else:
+            trueX.append(year)
+            idx = trueX.index(year)
+
+        if (len(trueY) < idx + 1):
+            trueY.append(1)
+        else:
+            trueY[idx] = trueY[idx] + 1
+
+    data2 = {'x': trueX, 'y': trueY}
+
+    print(data2['x'])
+    print(data2['y'])
+
+    plotRecall.y_range.factors = data2['x']
+    dataRecall.data['right'] = data2['y']
+
+    dataRecall.data['y'] = list(range(1, len(data2['x']) + 1))
+    print(dataRecall.data['y'])
+    print(dataRecall.data['right'])
+
+
+begin = DatePicker(title="Begin Date:", min_date=datetime(2004, 1, 1),
+                   max_date=datetime.now(),
+                   value=datetime(datetime.now().year, 1, 1))
+
+end = DatePicker(title="End Date:", min_date=datetime(2004, 1, 1),
+                 max_date=datetime.now(),
+                 value=datetime(datetime.now().year, 1, 1))
+
+recallButton = Button(label="Show", button_type="success")
+recallButton.on_click(onChangeRecallDate)
+
+desc = Div(
+    text="OpenFDA: Food recall enforcement reports. Recalls are and appropriate alternative method for removing or correcting "
+         "marketed consumer products, their labeling, and/or promotional literature that violate the laws administred "
+         "by the Food and Drug Administration (FDA).", width=800)
+
+draw([begin, end, recallButton], desc, plotRecall)
 
 ###########################################################################
 

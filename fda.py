@@ -187,7 +187,6 @@ def productionCities(top=10):
 def recallByYear(fromDate='20150101', toDate='20171231'):
     query = "recall_initiation_date:[%s+TO+%s]&count=recall_initiation_date" % (fromDate, toDate)
 
-    print(query)
     conn.request("GET", "/food/enforcement.json?search=" + query)
     r1 = conn.getresponse()
 

@@ -9,5 +9,3 @@ Podatki, namenjeni prenosu, so razbiti na veliko število datotek v JSON formatu
 Podatki so v dokumentni, nenormalizirani obliki, kar omogoča hitro iskanje.
 Normalizacija in vpeljava MySql bi bila nesmiselna, saj je iskanje z relacijsko bazo počasnejše.
 Edino smiselno bi bilo uporabiti MongoDB in samostojna implementacija Elastic Search-a, vendar zagotovo ne bi bil tako dober kot njihov.
-
-Analiza podatkov: 
