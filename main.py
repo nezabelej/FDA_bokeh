@@ -34,14 +34,16 @@ draw([selector], desc, plotProducts)
 ###########################################################################
 
 far = frequentAdverseReactions()
-plotReactions, dataReactions = plotHBar(far, "What adverse drug reactions are frequently reported?", "Quantity", "Reaction")
+plotReactions, dataAll, dataMale, dataFemale = plotHBar(far, "What adverse drug reactions are frequently reported?", "Quantity", "Reaction")
 
 def onChangeReactions():
     data = frequentAdverseReactions(fromDate=str(dateSlider1.value)+'0101',
                                     toDate=str(dateSlider2.value)+'0101',
                                     gender=selectorGender.value)
     plotReactions.y_range.factors = data['x']
-    dataReactions.data['right'] = data['y']
+    dataAll.data['right'] = data['All']
+    dataMale.data['right'] = data['Male']
+    dataFemale.data['right'] = data['Female']
 
 selectorGender = Select(title='Gender: ', value='All',
                   options=['All', 'Female', 'Male'])
