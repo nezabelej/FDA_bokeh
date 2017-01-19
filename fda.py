@@ -1,6 +1,5 @@
 import http.client, urllib, ssl
 import json
-import pandas as pd
 
 ssl._create_default_https_context = ssl._create_unverified_context
 conn = http.client.HTTPSConnection("api.fda.gov")
