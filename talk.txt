@@ -2,7 +2,7 @@ Bokeh je knjižnica programskega jezika Python, ki nam omogoča interaktivno viz
 Arhitektura Bokeha sestoji iz dveh delov: izdelava grafov z programskem jeziku Python in pa izris v brskalniku s knjižnico BokehJS. 
 Če želimo sinhronizacijo Bokeh grafov in interaktivne vizualizacije v brskalniku, moramo uporabiti tudi strežnik Bokeh. Tako imamo omogočeno avtomatično posodabljanje uporabniškega vmesnika v brskalniku glede na naše klike in vnose.
 
-OpenFDA (Food and Drug Administration) nam na svojih straneh omogoča dostop do 100 GB velike množice podatkov, kjer lahko poizvedujemo o medicinskih poročilih o zdravilih in hrani; na primer stranski učinki zdravil ali odpoklic prehrambenih produktov. OpenFDA je namenjena predvsem za poizvedbe preko njihovega zmogljivega API-ja, ki ima v ozadju implementiran učinkovit Elastic Search. Ta nam omogoča hitro in preprosto poizvedovanje po podatkih. 
+OpenFDA (Food and Drug Administration) nam na svojih straneh omogoča dostop do 100 GB podatkov o medicinskih poročilih zdravil in odpoklicanih prehrambenih izdelkih OpenFDA je namenjena predvsem za poizvedbe preko njihovega zmogljivega API-ja, ki ima v ozadju implementiran učinkovit Elastic Search. Ta nam omogoča hitro in preprosto poizvedovanje po podatkih. 
 Podatki, namenjeni prenosu, so razbiti na veliko število datotek v JSON formatu, kar pomeni dokumentno in nenormalizirano obliko, ki omogoča hitro iskanje. Če želimo prenesti podatke, moramo paziti, da ob vsaki posodobitvi podatkov znova prenesemo celotno zbirko podatkov.
 
 Graf nam ponazarja stevilo porocanih stranskih ucinkov glede na kombinacijo
